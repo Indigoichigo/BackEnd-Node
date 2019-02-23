@@ -52,8 +52,8 @@ async function getCourse() {
   const courses = await Course.find({ author: 'Ray' })
     .limit(10) // 幾筆筆資料 //顯示頁數方式的話 10改成pageSize
     .skip((pageNumber - 1) * pageSize) // 顯示頁數的方式
-    .sort({ name: 1 }) // 1:升幕排序 0:降幕排序
-    .select({ name: 1, tags: 1 }) // 選擇要顯示的key
+    .sort({ name: 1 }) // 1:升幕排序 -1:降幕排序 // 也可以打 sort('-name')
+    .select({ name: 1, tags: 1 }) // 選擇要顯示的key // 也可以打 select('name tags')
     .count(); // 顯示有幾筆符合
   console.log(courses);
 }
@@ -81,7 +81,7 @@ getCourse();
  *
  * 比較查詢運算子
  * .find({ price: { $gte: 10, $lte: 20 } })
- * .find({ price: { $in: [10, 15, 20] } })
+ * .find({ price: { $in: [10, 15, 20] } }) //當價格為10, 15, 20時
  * --------------------------------------------------
  * 邏輯查詢運算子
  * .or([{ author: 'Mosh' }, { isPublished: true }])
