@@ -26,6 +26,7 @@ const courseSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
+    // value must be one of below
     enum: ['web', 'mobile', 'network'],
     lowercase: true,
     // uppercase: true,
@@ -35,6 +36,7 @@ const courseSchema = new mongoose.Schema({
   tags: {
     type: Array,
     validate: {
+      // if data is from api or other place
       // isAsync: true,
       // set an async validation
       // validator: function(v, callback) {
@@ -53,13 +55,14 @@ const courseSchema = new mongoose.Schema({
   isPublished: Boolean,
   price: {
     type: Number,
+    // if any of property is necessary
     required: function() {
       return this.isPublished;
     },
     min: 10,
     max: 200,
-    get: v => Math.round(v), // use when getting document
-    set: v => Math.round(v), // use when creating document
+    get: v => Math.round(v), // use when reading document
+    set: v => Math.round(v), // use when setting document
   },
 });
 
@@ -114,7 +117,7 @@ async function updateCourse(id) {
         isPubished: false,
       },
     },
-    { new: true }
+    { new: true },
   );
 
   console.log(result);
